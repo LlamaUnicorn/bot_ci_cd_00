@@ -17,4 +17,4 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Build Docker Image
-      run: docker build -t tg_bot:latest .
+      run: docker-compose -f docker-compose.yml build

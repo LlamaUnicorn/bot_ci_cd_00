@@ -1,0 +1,7 @@
+version: '3'
+services:
+  app:
+    image: tg_bot:latest  # Reference the Docker image built by your GitHub Actions workflow
+    ports:
+      - "80:80"
+
