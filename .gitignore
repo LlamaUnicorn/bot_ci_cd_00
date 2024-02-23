@@ -160,3 +160,12 @@ cython_debug/
 #.idea/
 
 bot/config.py
+/.idea/bot_ci_cd_00.iml
+/.idea/.gitignore
+/.python-version
+/.github/workflows/docker-build (copy).yml.backup
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/inspectionProfiles/profiles_settings.xml
+/.idea/inspectionProfiles/Project_Default.xml
+/.idea/vcs.xml

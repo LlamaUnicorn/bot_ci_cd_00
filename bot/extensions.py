@@ -1,5 +1,8 @@
 import json
+
 import requests
+import yagmail
+
 from config import currency, WEATHER_TOKEN
 
 
@@ -33,6 +36,7 @@ class CurrencyConverter:
         total_base = round(total_base, 2)
         message = total_base
         return message
+
 
 #  Сначала реализовал функционал получения прогноза погоды в виде класса. Позже переделаю (надеюсь).
 #  Попробуйте вместо названия города ввести цифру.
@@ -73,3 +77,8 @@ class GetWeather:
     @staticmethod
     def run(self):
         self.get_coordinates()
+
+
+def send_email(subject, body, to, mail_user, mail_app_password):
+    yag = yagmail.SMTP(user=mail_user, password=mail_app_password)
+    yag.send(to=to, subject=subject, contents=body)

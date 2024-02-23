@@ -1,8 +1,8 @@
 import telebot
 from telebot import types
 
-from config import currency, TOKEN
-from extensions import ConversionException, CurrencyConverter, GetWeather
+from config import currency, TOKEN, MAIL_TKN, TO, FROM
+from extensions import ConversionException, CurrencyConverter, GetWeather, send_email
 
 
 def create_markup(base=None):
@@ -22,7 +22,8 @@ bot = telebot.TeleBot(TOKEN)
 def start(message: telebot.types.Message):
     text = 'Доступные команды:\n/convert - конвертер валют\
 \n/values - список доступных валют\
-\n/weather - прогноз погоды'
+\n/weather - прогноз погоды\
+\ndo <your todo> - отправить туду в things 3'
     bot.reply_to(message, text)
 
 
@@ -81,6 +82,19 @@ def amount_handler(message: telebot.types.Message, base, quote):
     else:
         text = f'Цена {amount} {quote} в {base}: {new_price}'
         bot.send_message(message.chat.id, text)
+
+
+@bot.message_handler(func=lambda message: message.text.lower().startswith('do'))
+def do_message_handler(message: telebot.types.Message):
+    if '\n' in message.text:
+        subject, body = message.text[3:].split('\n', 1)
+    else:
+        subject = message.text[3:]
+        body = ""
+    to = TO
+    sent_from = FROM
+    mail_app_password = MAIL_TKN
+    send_email(subject, body, to, sent_from, mail_app_password)
 
 
 bot.polling()
