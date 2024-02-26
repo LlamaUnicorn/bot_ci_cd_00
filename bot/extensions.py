@@ -47,6 +47,7 @@ class GetWeather:
         self._location = city
         self.location_lat = None
         self.location_lon = None
+        self.local_name = None
 
     @property
     def location(self):
@@ -66,11 +67,15 @@ class GetWeather:
         texts = json.loads(r.content)
         self.location_lat = texts[0]['lat']
         self.location_lon = texts[0]['lon']
+        self.local_name = texts[0]['local_names']['ru']
 
+    def get_weather(self):
+        # Get weather for the location
         located_weather = f'https://api.openweathermap.org/data/2.5/weather?lat={self.location_lat}&lon={self.location_lon}&appid={WEATHER_TOKEN}&units=metric'
         weather_request = requests.get(located_weather)
         texts_weather = json.loads(weather_request.content)
-        weather_report = f"{texts[0]['local_names']['ru']}: ощущается, как {texts_weather['main']['feels_like']}°C."
+        # weather_report = f"{texts[0]['local_names']['ru']}: ощущается, как {texts_weather['main']['feels_like']}°C."
+        weather_report = f"{self.local_name}: ощущается, как {texts_weather['main']['feels_like']}°C."
         print(weather_report)
         return weather_report
 

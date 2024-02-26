@@ -15,7 +15,16 @@ def create_markup(base=None):
     return markup
 
 
+def create_weather_markup():
+    markup = types.ReplyKeyboardMarkup(one_time_keyboard=True)
+    buttons = [types.KeyboardButton('Set Location'), types.KeyboardButton('Get Weather')]
+    markup.add(*buttons)
+    return markup
+
+
 bot = telebot.TeleBot(TOKEN)
+
+get_weather = GetWeather(None)  # Initialize GetWeather with no location
 
 
 @bot.message_handler(commands=['start', 'help'])
@@ -37,16 +46,31 @@ def values(message: telebot.types.Message):
 
 @bot.message_handler(commands=['weather'])
 def weather(message: telebot.types.Message):
-    text = 'Укажите город'
-    bot.send_message(message.chat.id, text)
-    bot.register_next_step_handler(message, get_forecast)
+    markup = create_weather_markup()
+    bot.send_message(message.chat.id, 'Choose an option:', reply_markup=markup)
 
 
-def get_forecast(message: telebot.types.Message):
-    location = message.text.strip().lower()
-    get_weather = GetWeather(location)
-    result = get_weather.get_coordinates()
+@bot.message_handler(func=lambda message: message.text == 'Set Location')
+def set_location(message: telebot.types.Message):
+    bot.send_message(message.chat.id, 'Please enter the location:')
+    bot.register_next_step_handler(message, save_location)
+
+
+def save_location(message: telebot.types.Message):
+    get_weather.location = message.text.strip().lower()
+    get_weather.get_coordinates()
+    bot.send_message(message.chat.id, f'Location set to {get_weather.local_name}.')
+    result = get_weather.get_weather()
     bot.send_message(message.chat.id, result)
+
+
+@bot.message_handler(func=lambda message: message.text == 'Get Weather')
+def get_forecast(message: telebot.types.Message):
+    if get_weather.location is None:
+        set_location(message)
+    else:
+        result = get_weather.get_weather()
+        bot.send_message(message.chat.id, result)
 
 
 @bot.message_handler(commands=['convert'])
