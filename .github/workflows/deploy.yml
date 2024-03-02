@@ -1,4 +1,4 @@
-name: Deploy to Server
+name: Build and Deploy to Server
 
 on:
   push:
@@ -9,7 +9,18 @@ on:
       - main
 
 jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+
+    - name: Build Docker Image
+      run: docker-compose -f docker-compose.yml build
+
   deploy:
+    needs: build
     runs-on: ubuntu-latest
 
     steps:
