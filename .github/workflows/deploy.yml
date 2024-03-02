@@ -7,7 +7,6 @@ on:
   pull_request:
     branches:
       - main
-  workflow_dispatch:
 
 jobs:
   build:
@@ -27,9 +26,6 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
-
-      - name: Ping Server
-        run: ping -c 4 ${{ secrets.SERVER_IP }}
 
       - name: Execute remote SSH commands
         uses: appleboy/ssh-action@master
