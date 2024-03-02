@@ -32,7 +32,7 @@ def start(message: telebot.types.Message):
     text = 'Доступные команды:\n/convert - конвертер валют\
 \n/values - список доступных валют\
 \n/weather - прогноз погоды\
-\ndo <your todo> - отправить туду в things 3 testing the deploy'
+\ndo <your todo> - отправить туду в things 3 testing the deploy via gh'
     bot.reply_to(message, text)
 
 
