@@ -24,7 +24,7 @@ def create_weather_markup():
 
 bot = telebot.TeleBot(TOKEN)
 
-get_weather = GetWeather(None)  # Initialize GetWeather with no location
+get_weather = GetWeather(None)
 
 
 @bot.message_handler(commands=['start', 'help'])
