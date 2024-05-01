@@ -1,11 +1,12 @@
 import telebot
 from telebot import types
 
-from config import currency, TOKEN, MAIL_TKN, TO, FROM
+from config import currency, TOKEN, MAIL_TOKEN, TO, FROM
 from extensions import ConversionException, CurrencyConverter, GetWeather, send_email
 
 
 def create_markup(base=None):
+    """Currency keyboard."""
     markup = types.ReplyKeyboardMarkup(one_time_keyboard=True)
     buttons = []
     for val in currency.keys():
@@ -16,6 +17,7 @@ def create_markup(base=None):
 
 
 def create_weather_markup():
+    """Weather keyboard."""
     markup = types.ReplyKeyboardMarkup(one_time_keyboard=True)
     buttons = [types.KeyboardButton('Set Location'), types.KeyboardButton('Get Weather')]
     markup.add(*buttons)
@@ -117,7 +119,7 @@ def do_message_handler(message: telebot.types.Message):
         body = ""
     to = TO
     sent_from = FROM
-    mail_app_password = MAIL_TKN
+    mail_app_password = MAIL_TOKEN
     send_email(subject, body, to, sent_from, mail_app_password)
 
 

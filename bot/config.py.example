@@ -1,0 +1,12 @@
+TOKEN = 'YOUR_TELEGRAM_TOKEN'
+
+WEATHER_TOKEN = 'YOUR_WEATHER_TOKEN'
+MAIL_TOKEN = 'YOUR_MAIL_TOKEN'
+FROM = "YOUR_MAIL_ADDRESS"
+TO = "YOUR_THINGS_EMAIL"
+
+currency = {
+    'доллар': 'USD',
+    'евро': 'EUR',
+    'рубль': 'RUB'
+}
