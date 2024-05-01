@@ -123,4 +123,11 @@ def do_message_handler(message: telebot.types.Message):
     send_email(subject, body, to, sent_from, mail_app_password)
 
 
+@bot.message_handler(func=lambda message: True, content_types=['audio', 'photo', 'voice', 'video', 'document',
+    'text', 'location', 'contact', 'sticker'])
+def echo_message(message):
+    print(f'\n{message.__dict__=}')
+    # bot.reply_to(message, message)
+
+
 bot.polling()
